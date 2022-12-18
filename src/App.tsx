@@ -1,9 +1,10 @@
 import './app.gb.scss';
+import { Homepage } from './views/homepage';
 
 export const App: React.FC = (props) => {
   return (
     <div className="crud-users">
-      <h1>App</h1>
+      <Homepage />
     </div>
   )
 }
