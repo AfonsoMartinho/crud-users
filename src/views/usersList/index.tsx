@@ -16,8 +16,8 @@ export const UsersList: React.FC<IHomePage> = ({usersList}) => {
 		<>
 			<div>UsersList</div>
 			<ul>
-				{ users && users.map(user => (
-					<li key={user.uuid}>{user.name.first}</li>
+				{ users && users.map((user, i) => (
+					<li key={i}>{user.name.first}</li>
 				))
 				}
 			</ul>

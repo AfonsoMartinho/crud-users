@@ -22,8 +22,16 @@ export class UsersStore implements IUsersStore{
         this.usersList = usersData;
     }
 
-    @action getUsersData = async () => {
-        const usersData = await this.usersService.getUsers();
+    @action getUser = async () => {
+        const usersData = await this.usersService.getUser();
+
+        runInAction(() => {
+            this.setUsersList(usersData);
+        })
+    }
+
+    @action getUsersList = async (usersLength?: number) => {
+        const usersData = await this.usersService.getUsersWithParams(`?results=${usersLength || 20}`);
 
         runInAction(() => {
             this.setUsersList(usersData);

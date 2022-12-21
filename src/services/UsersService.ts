@@ -2,7 +2,7 @@ import { IUser } from "../models/User";
 const baseApiURL = "https://randomuser.me/api/";
 
 export class UsersService {
-    getUsers = async ():Promise<IUser[]> => {
+    getUser = async ():Promise<IUser[]> => {
         const res = await fetch(baseApiURL);
         const data = await res.json();
         return data.results;
