@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { IUser } from '../../models/User';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { UsersStore } from '../../stores/UsersStore';
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadIcon from '@mui/icons-material/Download';
+import { green, indigo } from '@mui/material/colors';
+
 
 interface IHomePage {
 	usersList: IUser[]
@@ -9,42 +12,44 @@ interface IHomePage {
 
 export const UsersList: React.FC<IHomePage> = ({usersList}) => {
 	const [users, setUsers] = React.useState<IUser[]>();
-	const [usersKeys, setUsersKeys] = React.useState<GridColDef[]>();
-	const rootClassName = 'users-table';
+	const rootClassName = 'users-list';
 	
 	React.useEffect(() => {
 		setUsers(usersList);
-		setUsersListKeys();
-	},[usersList]);
-
-	const setUsersListKeys = () => {
-        const usersKeysReturnArray: React.SetStateAction<GridColDef<any, any, any>[] | undefined> | { id: number; field: string; headerName: string; }[] = []
-        if(!usersList[0]) return;
-		const currentUsersKeys = Object.keys(usersList[0]); 
-		currentUsersKeys.forEach((key, i) =>{
-			usersKeysReturnArray.push({
-				id: i, field: key, headerName: key.toUpperCase()
-			}); 
-		})
-        setUsersKeys(usersKeysReturnArray)
-    }
+	},[usersList]); 
 
 	return (
 		<div className={rootClassName}>
-			{ users && usersKeys &&
-			  <DataGrid
-				rows={users}
-				columns={usersKeys}
-				pageSize={8}
-				checkboxSelection
-				/>
-			}
-			{/* <ul>
 				{ users && users.map((user, i) => (
-					<li key={user.uuid}>{user.phone}</li>
+				<Card variant='outlined' className={`${rootClassName}-card`} key={user.id}>
+					<CardHeader
+						avatar={
+							<Avatar alt="User Avatar" src={user.picture.large} sx={{ width: 96, height: 96 }} variant="rounded" />
+						}
+						title={
+							<Avatar sx={{ bgcolor: green[500] }} variant="rounded">{user.nationality}</Avatar>
+						}
+						subheader={
+							<Typography>{`${user.name.title} ${user.name.first} ${user.name.last}`}</Typography>
+						}
+					/>
+					<CardContent>
+						<div className={`${rootClassName}-card__content`}>		
+							<Typography>{user.nationality}</Typography>		
+							<Typography>{user.gender}</Typography>		
+						</div>
+					</CardContent>
+					<CardActions>
+						<IconButton aria-label="delete">
+							<DeleteIcon sx={{ color: indigo[100] }}/>
+						</IconButton>
+						<IconButton aria-label="download">
+							<DownloadIcon sx={{ color:indigo[100] }}/>
+						</IconButton>
+      				</CardActions>
+				</Card>
 				))
 				}
-			</ul> */}
 		</div>
 	);
 };
