@@ -1,4 +1,4 @@
-import { observable, action, runInAction, makeAutoObservable } from "mobx";
+import { observable, action, runInAction, makeAutoObservable, computed } from "mobx";
 import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { UsersService } from '../services/UsersService'
@@ -18,8 +18,20 @@ export class UsersStore implements IUsersStore{
         makeAutoObservable(this);
     }
 
-    @action setUsersList = (usersData: IUser[]) => {
-        this.usersList = usersData;
+    @action setUsersList = (usersData:any) => {
+        usersData.forEach((user:any) => {
+            this.usersList.push({
+                id: user.login.uuid,
+                gender: user.gender,
+                name: user.name,
+                location: user.location,
+                email: user.email,
+                registered: user.registered,
+                phone: user.phone,
+                picture: user.picture,
+                nat: user.nat,
+            })
+        })
     }
 
     @action getUser = async () => {
@@ -31,7 +43,7 @@ export class UsersStore implements IUsersStore{
     }
 
     @action getUsersList = async (usersLength?: number) => {
-        const usersData = await this.usersService.getUsersWithParams(`?results=${usersLength || 20}`);
+        const usersData = await this.usersService.getUsersWithParams(`?results=${usersLength || 200}`);
 
         runInAction(() => {
             this.setUsersList(usersData);

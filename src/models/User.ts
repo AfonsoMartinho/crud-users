@@ -2,7 +2,7 @@ import { NationalitiesType } from "../constants/nationalities"
 import { ILocation, IName, IPicture } from "../interfaces/common"
 
 export interface IUser {
-    uuid: string,
+    id: string,
     gender: string,
     name: IName
     location: ILocation,
