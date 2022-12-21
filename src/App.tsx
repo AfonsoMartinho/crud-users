@@ -9,7 +9,6 @@ export const App: React.FC = observer((props) => {
     const { usersStore } = useRootStore();
     React.useEffect(() => {
       usersStore.getUsersList();
-      //usersStore.loadUsersByNationality(Nationalities.UA);
     },[])
 
     return (

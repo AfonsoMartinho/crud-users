@@ -5,11 +5,11 @@ export class UsersService {
     getUser = async ():Promise<IUser[]> => {
         const res = await fetch(baseApiURL);
         const data = await res.json();
-        return data.results;
+        return await data.results;
     }
     getUsersWithParams = async (params?: string):Promise<IUser[]> => {
         const res = await fetch(`${baseApiURL}${params || ''}`);
         const data = await res.json();
-        return data.results;
+        return await data.results;
     }
 }

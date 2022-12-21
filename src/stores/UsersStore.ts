@@ -12,9 +12,11 @@ export interface IUsersStore {
 export class UsersStore implements IUsersStore{
     @observable usersList: IUser[] = [];
     @observable usersService: UsersService;
+    @observable currentServiceParameters: string;
 
     constructor(){
         this.usersService = new UsersService()
+        this.currentServiceParameters = '';
         makeAutoObservable(this);
     }
 
@@ -29,7 +31,7 @@ export class UsersStore implements IUsersStore{
                 registered: user.registered,
                 phone: user.phone,
                 picture: user.picture,
-                nat: user.nat,
+                nationality: user.nat,
             })
         })
     }
@@ -42,32 +44,16 @@ export class UsersStore implements IUsersStore{
         })
     }
 
-    @action getUsersList = async (usersLength?: number) => {
-        const usersData = await this.usersService.getUsersWithParams(`?results=${usersLength || 200}`);
+    @action deleteAllUsers = async () => {
+        this.usersList = [];
+    }
+
+    @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, usersLength?: number) => {
+        this.currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${usersLength || 10}`
+        const usersData = await this.usersService.getUsersWithParams(this.currentServiceParameters);
 
         runInAction(() => {
             this.setUsersList(usersData);
         })
     }
-
-    @action getUsersByNationality = async (nationality: NationalitiesType) => {
-        const usersData = await this.usersService.getUsersWithParams(`?nat=${nationality}`);
-        runInAction(() => {
-            this.setUsersList(usersData);
-        })
-    };
-
-    @action getUsersByGender = async (gender: GendersType) => {
-        const usersData = await this.usersService.getUsersWithParams(`?gender=${gender}`)
-        runInAction(() => {
-            this.setUsersList(usersData) 
-        })
-    };
-
-    @action getUsersWithpagination = async (page: number, resultsPerPage?: number) => {
-        const usersdata = await this.usersService.getUsersWithParams(`?page=${page}&results=${resultsPerPage || 10}`)
-        runInAction(()=> {
-            this.setUsersList(usersdata);
-        })
-    };
 }
