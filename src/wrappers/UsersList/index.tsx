@@ -4,39 +4,50 @@ import { Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton,
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import { green, indigo } from '@mui/material/colors';
+import { useRootStore } from '../../StoreContext';
 
 
-interface IHomePage {
-	usersList: IUser[]
-}
-
-export const UsersList: React.FC<IHomePage> = ({usersList}) => {
+export const UsersList: React.FC = () => {
 	const [users, setUsers] = React.useState<IUser[]>();
+	const { usersStore } = useRootStore();
+
 	const rootClassName = 'users-list';
-	
+
+
 	React.useEffect(() => {
-		setUsers(usersList);
-	},[usersList]); 
+		setUsers(usersStore.usersList)
+    },[])
 
 	return (
 		<div className={rootClassName}>
 				{ users && users.map((user, i) => (
 				<Card variant='outlined' className={`${rootClassName}-card`} key={user.id}>
 					<CardHeader
+						className={`${rootClassName}-card__header`}
 						avatar={
-							<Avatar alt="User Avatar" src={user.picture.large} sx={{ width: 96, height: 96 }} variant="rounded" />
+							<Avatar className={`${rootClassName}-card__header-image`} alt="User Avatar" src={user.picture.large} sx={{ width: 96, height: 96 }} variant="rounded" />
 						}
 						title={
-							<Avatar sx={{ bgcolor: green[500] }} variant="rounded">{user.nationality}</Avatar>
+							<div className={`${rootClassName}-card__header-text`}>
+								<div className={`${rootClassName}-card__header-text-location`}>
+									<Avatar sx={{ bgcolor: green[500] }} variant="rounded">{user.nationality}</Avatar>
+									<Typography>{user.location.country}</Typography>
+								</div>
+								<Typography>{`${user.name.title} ${user.name.first} ${user.name.last}`}</Typography>
+							</div>
 						}
 						subheader={
-							<Typography>{`${user.name.title} ${user.name.first} ${user.name.last}`}</Typography>
+							// TODO: Display Gender as icon
+							<Typography>{user.gender}, {user.age} years old</Typography>
 						}
 					/>
 					<CardContent>
-						<div className={`${rootClassName}-card__content`}>		
-							<Typography>{user.nationality}</Typography>		
-							<Typography>{user.gender}</Typography>		
+						 {/* TODO: Add icons as label ex: phone: 📞 - 910227773 */}
+						<div className={`${rootClassName}-card__content`}>	
+							<Typography>{user.location.country}</Typography>
+							<Typography>{user.email}</Typography>
+							<Typography>Member since {user.registered.age} yrs</Typography>
+							<Typography>{user.phone}</Typography>
 						</div>
 					</CardContent>
 					<CardActions>

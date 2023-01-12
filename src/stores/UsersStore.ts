@@ -26,6 +26,7 @@ export class UsersStore implements IUsersStore{
                 id: user.login.uuid,
                 gender: user.gender,
                 name: user.name,
+                age: user.dob.age,
                 location: user.location,
                 email: user.email,
                 registered: user.registered,

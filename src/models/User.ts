@@ -4,7 +4,8 @@ import { ILocation, IName, IPicture } from "../interfaces/common"
 export interface IUser {
     id: string,
     gender: string,
-    name: IName
+    name: IName,
+    age: number,
     location: ILocation,
     email: string,
     registered: {
