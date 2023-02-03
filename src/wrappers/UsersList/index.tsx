@@ -1,22 +1,17 @@
 import * as React from 'react';
 import { IUser } from '../../models/User';
-import { Avatar, Button, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
+import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import { green, indigo } from '@mui/material/colors';
-import { useRootStore } from '../../StoreContext';
 
+interface IUsersListProps {
+	onDeleteUser: (userId: string) => void;
+	users: IUser[];
+}
 
-export const UsersList: React.FC = () => {
-	const [users, setUsers] = React.useState<IUser[]>();
-	const { usersStore } = useRootStore();
-
+export const UsersList = ({ onDeleteUser, users }: IUsersListProps): JSX.Element => {
 	const rootClassName = 'users-list';
-
-
-	React.useEffect(() => {
-		setUsers(usersStore.usersList)
-    },[])
 
 	return (
 		<div className={rootClassName}>
@@ -50,7 +45,7 @@ export const UsersList: React.FC = () => {
 						</div>
 					</CardContent>
 					<CardActions>
-						<IconButton aria-label="delete">
+						<IconButton aria-label="delete" onClick={()=>onDeleteUser(user.id)}>
 							<DeleteIcon sx={{ color: indigo[100] }}/>
 						</IconButton>
 						<IconButton aria-label="download">

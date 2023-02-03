@@ -49,6 +49,14 @@ export class UsersStore implements IUsersStore{
         this.usersList = [];
     }
 
+    @action deleteUser = async (userId: string) => {
+        this.setUsersList(
+            this.usersList.filter((user) => {
+                return user.id !== userId
+            })
+        );
+    }
+
     @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, usersLength?: number) => {
         this.currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${usersLength || 12}`
         const usersData = await this.usersService.getUsersWithParams(this.currentServiceParameters);

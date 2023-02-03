@@ -1,9 +1,11 @@
 import React from "react";
+import { IUser } from "../models/User";
 import { useRootStore } from "../StoreContext";
 import { UsersList } from "../wrappers/UsersList";
 
 export const UsersPage: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
+    const [usersList, setUsersList] = React.useState<IUser[]>();
 	const [errorMessage, setErrorMessage] = React.useState<string>();
     const { usersStore } = useRootStore();
 
@@ -27,7 +29,7 @@ export const UsersPage: React.FC = () => {
             { isLoading ? ( <div>isLoading</div> ) : ( 
           <>
               { usersStore.usersList.length > 0 &&
-                <UsersList />
+                <UsersList users={usersStore.usersList} onDeleteUser={(userId: string)=> usersStore.deleteUser(userId)}/>
               }
               { errorMessage!= undefined && ( <div>{errorMessage}</div> )}
           </> )
