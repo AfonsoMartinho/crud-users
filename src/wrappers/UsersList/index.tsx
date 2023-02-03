@@ -25,15 +25,15 @@ export const UsersList: React.FC = () => {
 					<CardHeader
 						className={`${rootClassName}-card__header`}
 						avatar={
-							<Avatar className={`${rootClassName}-card__header-image`} alt="User Avatar" src={user.picture.large} sx={{ width: 96, height: 96 }} variant="rounded" />
+							<Avatar className={`${rootClassName}-card__avatar`} alt="User Avatar" src={user.picture.large} sx={{ width: 96, height: 96 }} variant="rounded" />
 						}
 						title={
 							<div className={`${rootClassName}-card__header-text`}>
-								<div className={`${rootClassName}-card__header-text-location`}>
+								<div className={`${rootClassName}-card__location`}>
 									<Avatar sx={{ bgcolor: green[500] }} variant="rounded">{user.nationality}</Avatar>
 									<Typography>{user.location.country}</Typography>
 								</div>
-								<Typography>{`${user.name.title} ${user.name.first} ${user.name.last}`}</Typography>
+								<Typography className={`${rootClassName}-card__name`}>{`${user.name.title} ${user.name.first} ${user.name.last}`}</Typography>
 							</div>
 						}
 						subheader={
@@ -43,8 +43,7 @@ export const UsersList: React.FC = () => {
 					/>
 					<CardContent>
 						 {/* TODO: Add icons as label ex: phone: 📞 - 910227773 */}
-						<div className={`${rootClassName}-card__content`}>	
-							<Typography>{user.location.country}</Typography>
+						<div className={`${rootClassName}-card__content`}>
 							<Typography>{user.email}</Typography>
 							<Typography>Member since {user.registered.age} yrs</Typography>
 							<Typography>{user.phone}</Typography>
