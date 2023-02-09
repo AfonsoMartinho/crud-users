@@ -1,4 +1,6 @@
 import React from "react";
+import { GendersType } from "../constants/genders";
+import { NationalitiesType } from "../constants/nationalities";
 import { IUser } from "../models/User";
 import { useRootStore } from "../StoreContext";
 import { FiltersBar } from "../wrappers/FiltersBar/indext";
@@ -23,12 +25,12 @@ export const UsersPage: React.FC = ():JSX.Element => {
         })
     };
 
-    const filterByNationality = (nationality: string) => {
-        usersList?.filter((user) => user.nationality === nationality)
+    const filterByNationality = (nationality: NationalitiesType) => {
+        setUsersList(usersList?.filter((user) => user.nationality === nationality));
     };
 
-    const filterByGender = (gender: string) => {
-        usersList?.filter((user) => user.gender === gender)
+    const filterByGender = (gender: GendersType) => {
+        setUsersList( usersList?.filter((user) => user.gender === gender));
     };
 
     const clearFilters = () => {
@@ -44,7 +46,10 @@ export const UsersPage: React.FC = ():JSX.Element => {
         <div className="users-page">
             { isLoading ? ( <div>isLoading</div> ) : ( 
           <>
-            <FiltersBar onClearFilters={clearFilters()} onGenderFilter={(gender: string) => filterByGender(gender)} onNationalityFilter={(nationality: string) => filterByNationality(nationality)}/>
+            <FiltersBar 
+                onClearFilters={()=> clearFilters()}
+                onGenderFilter={(gender: GendersType) => filterByGender(gender)}
+                onNationalityFilter={(nationality: NationalitiesType) => filterByNationality(nationality)} />
             { usersList && usersList.length > 0 &&
                 <UsersList users={usersList} onDeleteUser={(userId: string)=> usersStore.deleteUser(userId)}/>
             }
