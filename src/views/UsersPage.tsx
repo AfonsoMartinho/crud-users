@@ -26,11 +26,12 @@ export const UsersPage: React.FC = ():JSX.Element => {
     };
 
     const filterByNationality = (nationality: NationalitiesType) => {
-        setUsersList(usersList?.filter((user) => user.nationality === nationality));
+        setUsersList(usersStore.usersList?.filter((user) => user.nationality === nationality));
     };
 
     const filterByGender = (gender: GendersType) => {
-        setUsersList( usersList?.filter((user) => user.gender === gender));
+        clearFilters();
+        setUsersList(usersStore.usersList?.filter((user) => user.gender === gender));
     };
 
     const clearFilters = () => {
