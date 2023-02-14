@@ -3,7 +3,7 @@ import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { IUser } from "../models/User";
 import { useRootStore } from "../StoreContext";
-import { FiltersBar } from "../wrappers/FiltersBar/indext";
+import { FiltersBar, FilterType } from "../wrappers/FiltersBar/indext";
 import { UsersList } from "../wrappers/UsersList";
 
 export const UsersPage: React.FC = ():JSX.Element => {
@@ -25,18 +25,20 @@ export const UsersPage: React.FC = ():JSX.Element => {
         })
     };
 
-    const filterByNationality = (nationality: NationalitiesType) => {
-        setUsersList(usersStore.usersList?.filter((user) => user.nationality === nationality));
+    const applyFilters = (filters: FilterType) => {
+    if (filters.nationality === '' && filters.gender === '') return clearAllFilters();
+    setUsersList(usersStore.usersList?.filter((user) => {
+        for (const filterKey of Object.keys(filters) as (keyof FilterType)[]) {
+            if (filters[filterKey] !== '' && user[filterKey] !== filters[filterKey]) {
+                return false;
+            }
+        }
+        return true;
+    }));
     };
+      
 
-    const filterByGender = (gender: GendersType) => {
-        clearFilters();
-        setUsersList(usersStore.usersList?.filter((user) => user.gender === gender));
-    };
-
-    const clearFilters = () => {
-        setUsersList(usersStore.usersList);
-    }
+    const clearAllFilters = () => setUsersList(usersStore.usersList);
 
     React.useEffect(() => {
         if(!isLoading) return;
@@ -48,11 +50,12 @@ export const UsersPage: React.FC = ():JSX.Element => {
             { isLoading ? ( <div>isLoading</div> ) : ( 
           <>
             <FiltersBar 
-                onClearFilters={()=> clearFilters()}
-                onGenderFilter={(gender: GendersType) => filterByGender(gender)}
-                onNationalityFilter={(nationality: NationalitiesType) => filterByNationality(nationality)} />
-            { usersList && usersList.length > 0 &&
+                onClearAllFilters={clearAllFilters}
+                onFilter={(filters: FilterType) => applyFilters(filters)} />
+            { usersList && usersList.length > 0 ?
                 <UsersList users={usersList} onDeleteUser={(userId: string)=> usersStore.deleteUser(userId)}/>
+                :
+                <h1>Empty State</h1>
             }
             { errorMessage!= undefined && ( <div>{errorMessage}</div> )}
           </> )
