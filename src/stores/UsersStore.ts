@@ -6,8 +6,9 @@ import { IUser } from "../models/User";
 
 export interface IUsersStore {
     readonly usersService: UsersService;
-
 }
+
+export type FormatsType = 'csv' | 'xml';
 
 export class UsersStore implements IUsersStore{
     @observable usersList: IUser[] = [];
@@ -57,6 +58,10 @@ export class UsersStore implements IUsersStore{
                 return user.id !== userId
             })
         );
+    }
+
+    @action exportUsersList = async (format: FormatsType) => {
+        await this.usersService.exportCurrentUsersList(format);
     }
 
     @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, usersLength?: number) => {

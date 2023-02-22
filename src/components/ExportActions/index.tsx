@@ -1,14 +1,15 @@
-import React from "react";
 import { Chip, Typography } from "@mui/material";
-
-type FormatsType = 'csv' | 'xml';
+import { useRootStore } from "../../StoreContext";
+import { FormatsType } from "../../stores/UsersStore";
 
 
 export const ExportActions = (): JSX.Element => {
+    const { usersStore } = useRootStore();
     const rootClassName = 'export-actions';
 
     const handleFileExport = (format: FormatsType) => {
         console.log('Export to ', format);
+        usersStore.exportUsersList(format)
     }
 
     return (
@@ -23,7 +24,6 @@ export const ExportActions = (): JSX.Element => {
                     label="XML" 
                     onClick={()=>handleFileExport('xml')}
                     variant="outlined" />
-                
             </div>
         </div>
     )
