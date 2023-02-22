@@ -13,10 +13,12 @@ export class UsersStore implements IUsersStore{
     @observable usersList: IUser[] = [];
     @observable usersService: UsersService;
     @observable currentServiceParameters: string;
+    @observable currentSeed?: string;
 
     constructor(){
         this.usersService = new UsersService()
         this.currentServiceParameters = '';
+        this.currentSeed = undefined;
         makeAutoObservable(this);
     }
 
@@ -58,8 +60,9 @@ export class UsersStore implements IUsersStore{
     }
 
     @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, usersLength?: number) => {
-        this.currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${usersLength || 12}`
+        this.currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${usersLength || 12}&seed=${this.currentSeed || ''}`
         const usersData = await this.usersService.getUsersWithParams(this.currentServiceParameters);
+        this.currentSeed = this.usersService.currentSeed;
 
         runInAction(() => {
             this.setUsersList(usersData);
