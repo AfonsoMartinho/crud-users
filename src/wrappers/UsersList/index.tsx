@@ -13,10 +13,15 @@ interface IUsersListProps {
 export const UsersList = ({ onDeleteUser, users }: IUsersListProps): JSX.Element => {
 	const rootClassName = 'users-list';
 
+	const handleLoadMore = () => {
+		console.log('loadMore')
+	}
+
 	return (
 		<div className={rootClassName}>
+			<div className={`${rootClassName}__content`}>
 				{ users && users.map((user, i) => (
-				<Card variant='outlined' className={`${rootClassName}-card`} key={user.id}>
+				<Card variant='outlined' className={`${rootClassName}__content-card`} key={user.id}>
 					<CardHeader
 						className={`${rootClassName}-card__header`}
 						avatar={
@@ -55,6 +60,10 @@ export const UsersList = ({ onDeleteUser, users }: IUsersListProps): JSX.Element
 				</Card>
 				))
 				}
+			</div>
+			<div className={`${rootClassName}__scroll`}>
+				<button onClick={()=> handleLoadMore()}>Load More</button>
+			</div>
 		</div>
 	);
 };
