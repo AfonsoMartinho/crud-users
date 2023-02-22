@@ -3,9 +3,10 @@
   @import "./scss/helpers";
 
   // Project components
+  @import "./components/Filters";
+  @import "./components/ExportActions";
 
   // Project wrapper components
   @import "./wrappers/UsersList";
-  @import "./wrappers/FiltersBar"
   // Reskins
 }

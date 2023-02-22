@@ -1,10 +1,9 @@
 import React from "react";
-import { GendersType } from "../constants/genders";
-import { NationalitiesType } from "../constants/nationalities";
 import { IUser } from "../models/User";
 import { useRootStore } from "../StoreContext";
-import { FiltersBar, FilterType } from "../wrappers/FiltersBar/indext";
+import { Filters, FilterType } from "../components/Filters";
 import { UsersList } from "../wrappers/UsersList";
+import { ExportActions } from "../components/ExportActions";
 
 export const UsersPage: React.FC = ():JSX.Element => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -49,8 +48,8 @@ export const UsersPage: React.FC = ():JSX.Element => {
         <div className="users-page">
             { isLoading ? ( <div>isLoading</div> ) : ( 
           <>
-            <FiltersBar 
-                onClearAllFilters={clearAllFilters}
+            <ExportActions />
+            <Filters
                 onFilter={(filters: FilterType) => applyFilters(filters)} />
             { usersList && usersList.length > 0 ?
                 <UsersList users={usersList} onDeleteUser={(userId: string)=> usersStore.deleteUser(userId)}/>
