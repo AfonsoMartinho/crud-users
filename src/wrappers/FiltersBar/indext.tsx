@@ -1,4 +1,4 @@
-import { Button, Chip, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Button, Chip, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { GendersType } from "../../constants/genders";
 import { Nationalities, NationalitiesType } from "../../constants/nationalities";
@@ -44,42 +44,46 @@ export const FiltersBar = ({ onClearAllFilters, onFilter }: IFiltersBarProps): J
     const handleClearAllFilters = () => {
         setActiveGender('');
         setActiveNationality('All');
-        // onClearAllFilters();
     }
 
     return (
         <div className={rootClassName}>
-            <InputLabel id="nationality-select-label">Nationality</InputLabel>
-            <Select
-                labelId="nationality-select-label"
-                id="natinality-select"
-                label="Nationality"
-                value={activetNationality}
-                onChange={handleNationalityChange}
-                defaultValue="All"
-            >
-            <MenuItem key="All" value="All">All</MenuItem>
-            {availableNationalities.map(nationality  => (
-                <MenuItem key={nationality} value={nationality}>
-                    {nationality}
-                </MenuItem>
-            ))}
-            </Select>
-
-            <InputLabel id="gender-chips-helper-label">Gender</InputLabel>
-            <Chip 
-                label="Female" 
-                onClick={()=>handleGenderFilter('female')}
-                variant="outlined"
-                onDelete={() =>handleGenderFilter()}
-                color={activeGender === 'female' ? "secondary" : "default"} />
-            <Chip
-                label="Male"
-                onClick={()=>handleGenderFilter('male')}
-                variant="outlined"
-                onDelete={()=> handleGenderFilter()}
-                color={activeGender === 'male' ? "primary" : "default"} />
-            <Button onClick={()=>handleClearAllFilters()}>Clear filters</Button>
+            <div className={`${rootClassName}-wrapper`}>
+                <div className={`${rootClassName}__gender`}>
+                    <Chip 
+                        label="Female" 
+                        onClick={()=>handleGenderFilter('female')}
+                        variant="outlined"
+                        onDelete={() =>handleGenderFilter()}
+                        color={activeGender === 'female' ? "secondary" : "default"} />
+                    <Chip
+                        label="Male"
+                        onClick={()=>handleGenderFilter('male')}
+                        variant="outlined"
+                        onDelete={()=> handleGenderFilter()}
+                        color={activeGender === 'male' ? "primary" : "default"} />
+                </div>
+                <div className={`${rootClassName}__nationality`}>
+                    <Typography>Nationality:</ Typography>
+                    <Select
+                        labelId="nationality-select-label"
+                        id="natinality-select"
+                        label="Nationality"
+                        size="small"
+                        value={activetNationality}
+                        onChange={handleNationalityChange}
+                        defaultValue="All"
+                    >
+                        <MenuItem key="All" value="All">All</MenuItem>
+                        {availableNationalities.map(nationality  => (
+                            <MenuItem key={nationality} value={nationality}>
+                                {nationality}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </div>
+            </div>
+            <Button variant="outlined" size="small" onClick={()=>handleClearAllFilters()}>Clear</Button>
         </div>
     )
 }

@@ -1,3 +1,20 @@
 .filters-bar {
-    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    &-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 6px 8px;
+        background-color: lightblue;
+        border-radius: 10px;
+        color: white;
+    }
+
+    &__nationality, &__gender {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
 }
