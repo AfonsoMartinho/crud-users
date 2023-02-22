@@ -1,9 +1,10 @@
-import { Button, Chip, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import React, { useEffect } from "react";
-import { GendersType } from "../../constants/genders";
-import { Nationalities, NationalitiesType } from "../../constants/nationalities";
-import { IUser } from "../../models/User";
+import { Chip, IconButton, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import { useRootStore } from "../../StoreContext";
+import { GendersType } from "../../constants/genders";
+import { NationalitiesType } from "../../constants/nationalities";
+import { IUser } from "../../models/User";
 
 export type FilterType = {
     nationality?: NationalitiesType | '';
@@ -82,8 +83,11 @@ export const FiltersBar = ({ onClearAllFilters, onFilter }: IFiltersBarProps): J
                         ))}
                     </Select>
                 </div>
+            <IconButton color="primary" component="label" onClick={()=>handleClearAllFilters()}>
+                <input hidden />
+                <CloseIcon />
+            </IconButton>
             </div>
-            <Button variant="outlined" size="small" onClick={()=>handleClearAllFilters()}>Clear</Button>
         </div>
     )
 }
