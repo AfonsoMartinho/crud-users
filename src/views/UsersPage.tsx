@@ -27,9 +27,7 @@ export const UsersPage: React.FC = ():JSX.Element => {
     };
 
     const loadMoreUsers = () => {
-        setCurrentPage(currentPage+1);
-        console.log('loadinbg more',currentPage)
-        fetchUsersFromStore(currentPage);
+        setCurrentPage(currentPage + 1);
     }
 
     const applyFilters = (filters: FilterType) => {
@@ -51,10 +49,10 @@ export const UsersPage: React.FC = ():JSX.Element => {
     }
 
     React.useEffect(() => {
-        if(!isLoading) return;
         console.log('useEffect')
+        console.log(currentPage);
         fetchUsersFromStore(currentPage);
-    },[])
+    },[currentPage])
 
     return (
         <div className="users-page">
