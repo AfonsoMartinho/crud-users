@@ -6,21 +6,18 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { green, indigo } from '@mui/material/colors';
 
 interface IUsersListProps {
-	onDeleteUser: (userId: string) => void;
+	onDeleteUser?: (userId: string) => void;
+	onLoadMore?: () => void;
 	users: IUser[];
 }
 
-export const UsersList = ({ onDeleteUser, users }: IUsersListProps): JSX.Element => {
+export const UsersList = ({ onDeleteUser, onLoadMore, users }: IUsersListProps): JSX.Element => {
 	const rootClassName = 'users-list';
-
-	const handleLoadMore = () => {
-		console.log('loadMore')
-	}
 
 	return (
 		<div className={rootClassName}>
 			<div className={`${rootClassName}__content`}>
-				{ users && users.map((user, i) => (
+				{ users && users.map((user) => (
 				<Card variant='outlined' className={`${rootClassName}__content-card`} key={user.id}>
 					<CardHeader
 						className={`${rootClassName}-card__header`}
@@ -50,20 +47,19 @@ export const UsersList = ({ onDeleteUser, users }: IUsersListProps): JSX.Element
 						</div>
 					</CardContent>
 					<CardActions>
-						<IconButton aria-label="delete" onClick={()=>onDeleteUser(user.id)}>
+						<IconButton aria-label="delete" onClick={()=>console.log(user.id)}>
 							<DeleteIcon sx={{ color: indigo[100] }}/>
-						</IconButton>
-						<IconButton aria-label="download">
-							<DownloadIcon sx={{ color:indigo[100] }}/>
 						</IconButton>
       				</CardActions>
 				</Card>
 				))
 				}
 			</div>
-			<div className={`${rootClassName}__scroll`}>
-				<button onClick={()=> handleLoadMore()}>Load More</button>
-			</div>
+			{ onLoadMore && (
+				<div className={`${rootClassName}__scroll`}>
+					<button onClick={()=> onLoadMore()}>Load More</button>
+				</div>
+			)}
 		</div>
 	);
 };
