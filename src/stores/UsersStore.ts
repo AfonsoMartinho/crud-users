@@ -1,4 +1,4 @@
-import { observable, action, runInAction, makeAutoObservable, computed } from "mobx";
+import { observable, action, makeAutoObservable, computed } from "mobx";
 import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { UsersService } from '../services/UsersService'
@@ -40,14 +40,6 @@ export class UsersStore implements IUsersStore{
         })
     }
 
-    @action getUser = async () => {
-        const usersData = await this.usersService.getUser();
-
-        runInAction(() => {
-            this.setUsersList(usersData);
-        })
-    }
-
     @action deleteAllUsers = async () => {
         this.usersList = [];
     }
@@ -61,16 +53,14 @@ export class UsersStore implements IUsersStore{
     }
 
     @action exportUsersList = async (format: FormatsType) => {
-        await this.usersService.exportCurrentUsersList(format);
+        this.usersService.exportCurrentUsersList(format);
     }
 
-    @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, usersLength?: number) => {
-        this.currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${usersLength || 12}&seed=${this.currentSeed || ''}`
+    @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, usersLength?: number, pageNumber?: number) => {
+        this.currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${usersLength || 2}&page=${pageNumber || 1}&seed=${this.currentSeed || ''}`
         const usersData = await this.usersService.getUsersWithParams(this.currentServiceParameters);
         this.currentSeed = this.usersService.currentSeed;
-
-        runInAction(() => {
-            this.setUsersList(usersData);
-        })
+        
+        this.setUsersList(usersData);
     }
 }
