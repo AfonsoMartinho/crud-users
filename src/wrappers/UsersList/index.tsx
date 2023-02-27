@@ -4,6 +4,7 @@ import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Typogra
 import DeleteIcon from '@mui/icons-material/Delete';
 import { green, indigo } from '@mui/material/colors';
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { useRootStore } from '../../StoreContext';
 
 interface IUsersListProps {
 	onDeleteUser?: (userId: string) => void;
@@ -11,18 +12,33 @@ interface IUsersListProps {
 	users: IUser[];
 }
 
-export const UsersList = ({ onDeleteUser, onLoadMore, users }: IUsersListProps): JSX.Element => {
+export const UsersList = ({ onLoadMore, users }: IUsersListProps): JSX.Element => {
 	const rootClassName = 'users-list';
+	const [isFiltering, setIsFiltering] = React.useState<boolean>(false);
+    const { usersStore } = useRootStore();
+
+	const handleInfiniteScroll =  () => {
+		setIsFiltering(false);
+		if(users.length < usersStore.usersList.length){ // There are filters being applied so we dont loadMore Data
+			setIsFiltering(true);
+			return;
+		}
+
+		if (onLoadMore) onLoadMore();
+	}
+
+	const loaderElement = (): JSX.Element => {
+		if(isFiltering) return(<></>) 
+		return ( <h4>Loading...</h4> )
+	}
 
 	return (
 		<div className={rootClassName}>
 			<InfiniteScroll
 				dataLength={users.length}
-				next={() => {
-					if(onLoadMore) onLoadMore()
-				}}
+				next={() => handleInfiniteScroll()}
 				hasMore={true}
-				loader={<h4>Loading...</h4>}
+				loader={loaderElement()}
 				endMessage={<h1>ay! You have seen it all</h1>}
 			>
 				<div className={`${rootClassName}__content`}>
