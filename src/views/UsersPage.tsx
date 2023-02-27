@@ -15,8 +15,7 @@ export const UsersPage: React.FC = ():JSX.Element => {
     const fetchUsersFromStore = async (pageNumber?: number) => {
 		await usersStore.getUsersList(undefined, undefined, undefined, pageNumber)
 		    .then(() => { 
-                setUsersList(usersStore.usersList)
-                console.log({...usersStore.usersList})
+                setUsersList([...usersStore.usersList])
                 setIsLoading(false);
             })
             .catch( (err)=> {
@@ -44,14 +43,11 @@ export const UsersPage: React.FC = ():JSX.Element => {
       
 
     const clearAllFilters = () => {
-        setUsersList(usersStore.usersList);
-        console.log(UsersList)
+        setUsersList([...usersStore.usersList]);
     }
 
     React.useEffect(() => {
-        console.log('useEffect')
-        console.log(currentPage);
-        fetchUsersFromStore(currentPage);
+        fetchUsersFromStore(currentPage)
     },[currentPage])
 
     return (
