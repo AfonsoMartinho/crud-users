@@ -57,7 +57,7 @@ export class UsersStore implements IUsersStore{
     }
 
     @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, usersLength?: number, pageNumber?: number) => {
-        this.currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${usersLength || 2}&page=${pageNumber || 1}&seed=${this.currentSeed || ''}`
+        this.currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${usersLength || 12}&page=${pageNumber || 1}&seed=${this.currentSeed || ''}`
         const usersData = await this.usersService.getUsersWithParams(this.currentServiceParameters);
         this.currentSeed = this.usersService.currentSeed;
         
