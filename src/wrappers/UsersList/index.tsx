@@ -18,11 +18,11 @@ export const UsersList = ({ onLoadMore, users }: IUsersListProps): JSX.Element =
     const { usersStore } = useRootStore();
 
 	const handleInfiniteScroll =  () => {
-		setIsFiltering(false);
-		if(users.length < usersStore.usersList.length){ // There are filters being applied so we dont loadMore Data
-			setIsFiltering(true);
-			return;
-		}
+		// setIsFiltering(false);
+		// if(users.length < usersStore.usersList.length){ // There are filters being applied so we dont loadMore Data
+		// 	setIsFiltering(true);
+		// 	return;
+		// }
 
 		if (onLoadMore) onLoadMore();
 	}

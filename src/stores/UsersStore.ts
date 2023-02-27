@@ -13,17 +13,32 @@ export type FormatsType = 'csv' | 'xml';
 export class UsersStore implements IUsersStore{
     @observable usersList: IUser[] = [];
     @observable usersService: UsersService;
-    @observable currentServiceParameters: string;
     @observable currentSeed?: string;
 
     constructor(){
         this.usersService = new UsersService()
-        this.currentServiceParameters = '';
         this.currentSeed = undefined;
         makeAutoObservable(this);
     }
 
     @action setUsersList = (usersData:any) => {
+        this.usersList = usersData.map((user:any) => {
+            return {
+                id: user.login.uuid,
+                gender: user.gender,
+                name: user.name,
+                age: user.dob.age,
+                location: user.location,
+                email: user.email,
+                registered: user.registered,
+                phone: user.phone,
+                picture: user.picture,
+                nationality: user.nat,
+            }
+        })
+    }
+
+    @action addMoreUsersToList = (usersData:any) => {
         usersData.forEach((user:any) => {
             this.usersList.push({
                 id: user.login.uuid,
@@ -56,11 +71,13 @@ export class UsersStore implements IUsersStore{
         this.usersService.exportCurrentUsersList(format);
     }
 
-    @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, usersLength?: number, pageNumber?: number) => {
-        this.currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${usersLength || 12}&page=${pageNumber || 1}&seed=${this.currentSeed || ''}`
-        const usersData = await this.usersService.getUsersWithParams(this.currentServiceParameters);
+    @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, pageNumber?: number) => {
+        const resultsNumber = 12;
+        const currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${resultsNumber}&page=${pageNumber || 1}`
+        const usersData = await this.usersService.getUsersWithParams(currentServiceParameters);
         this.currentSeed = this.usersService.currentSeed;
         
-        this.setUsersList(usersData);
+        if(pageNumber === 1) this.setUsersList(usersData);
+        else this.addMoreUsersToList(usersData);
     }
 }
