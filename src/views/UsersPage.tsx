@@ -7,41 +7,53 @@ import { ExportActions } from "../components/ExportActions";
 
 export const UsersPage: React.FC = ():JSX.Element => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
-    const [usersList, setUsersList] = React.useState<IUser[]>();
+    const [usersList, setUsersList] = React.useState<IUser[]>([]);
+    const [currentPage, setCurrentPage] = React.useState<number>(1);
 	const [errorMessage, setErrorMessage] = React.useState<string>();
     const { usersStore } = useRootStore();
 
-    const fetchUsersFromStore = async () => {
-		await usersStore.getUsersList()
+    const fetchUsersFromStore = async (pageNumber?: number) => {
+		await usersStore.getUsersList(undefined, undefined, undefined, pageNumber)
 		    .then(() => { 
                 setUsersList(usersStore.usersList)
+                console.log({...usersStore.usersList})
                 setIsLoading(false);
             })
             .catch( (err)=> {
-            console.log(err);
-            setIsLoading(false);
-            setErrorMessage('No Users Found!')
-        })
+                console.log(err);
+                setIsLoading(false);
+                setErrorMessage('No Users Found!')
+            })
     };
 
+    const loadMoreUsers = () => {
+        setCurrentPage(currentPage+1);
+        console.log('loadinbg more',currentPage)
+        fetchUsersFromStore(currentPage);
+    }
+
     const applyFilters = (filters: FilterType) => {
-    if (filters.nationality === '' && filters.gender === '') return clearAllFilters();
-    setUsersList(usersStore.usersList?.filter((user) => {
-        for (const filterKey of Object.keys(filters) as (keyof FilterType)[]) {
-            if (filters[filterKey] !== '' && user[filterKey] !== filters[filterKey]) {
-                return false;
+        if (filters.nationality === '' && filters.gender === '') return clearAllFilters();
+        setUsersList(usersStore.usersList?.filter((user) => {
+            for (const filterKey of Object.keys(filters) as (keyof FilterType)[]) {
+                if (filters[filterKey] !== '' && user[filterKey] !== filters[filterKey]) {
+                    return false;
+                }
             }
-        }
-        return true;
-    }));
+            return true;
+        }));
     };
       
 
-    const clearAllFilters = () => setUsersList(usersStore.usersList);
+    const clearAllFilters = () => {
+        setUsersList(usersStore.usersList);
+        console.log(UsersList)
+    }
 
     React.useEffect(() => {
         if(!isLoading) return;
-        fetchUsersFromStore();
+        console.log('useEffect')
+        fetchUsersFromStore(currentPage);
     },[])
 
     return (
@@ -52,7 +64,7 @@ export const UsersPage: React.FC = ():JSX.Element => {
             <Filters
                 onFilter={(filters: FilterType) => applyFilters(filters)} />
             { usersList && usersList.length > 0 ?
-                <UsersList users={usersList} onDeleteUser={(userId: string)=> usersStore.deleteUser(userId)}/>
+                <UsersList users={usersList} onLoadMore={() => loadMoreUsers()} onDeleteUser={(userId: string)=> usersStore.deleteUser(userId)}/>
                 :
                 <h1>Empty State</h1>
             }
