@@ -8,7 +8,6 @@ export const ExportActions = (): JSX.Element => {
     const rootClassName = 'export-actions';
 
     const handleFileExport = (format: FormatsType) => {
-        console.log('Export to ', format);
         usersStore.exportUsersList(format)
     }
 

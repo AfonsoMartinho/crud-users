@@ -6,16 +6,18 @@ const baseApiURL = "https://randomuser.me/api/";
 
 export class UsersService {
     @observable currentSeed?: string;
+    @observable currentParams?: string;
 
     getUsersWithParams = async (params?: string):Promise<IUser[]> => {
         const res = await fetch(`${baseApiURL}${params || ''}`);
         const data = await res.json();
         this.currentSeed = data.info.seed
+        this.currentParams = params;
         return await data.results;
     }
 
     exportCurrentUsersList = (format: FormatsType): void => {
         if(!this.currentSeed) return;
-        window.open(`${baseApiURL}?seed=${this.currentSeed}&format=${format}&dl`);
+        window.open(`${baseApiURL}${this.currentParams || ''}?seed=${this.currentSeed}&format=${format}&dl`);
     }
 }
