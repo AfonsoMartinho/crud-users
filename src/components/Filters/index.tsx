@@ -3,7 +3,7 @@ import { Chip, IconButton, MenuItem, Select, SelectChangeEvent, Typography } fro
 import CloseIcon from '@mui/icons-material/Close';
 import { useRootStore } from "../../StoreContext";
 import { GendersType } from "../../constants/genders";
-import { NationalitiesType } from "../../constants/nationalities";
+import { Nationalities, NationalitiesType } from "../../constants/nationalities";
 import { IUser } from "../../models/User";
 
 export type FilterType = {
@@ -22,7 +22,7 @@ export const Filters = ({ onFilter }: IFiltersProps): JSX.Element => {
     const rootClassName = 'filters';
     const { usersStore } = useRootStore();
 
-    const availableNationalities: NationalitiesType[] = Array.from(new Set(usersStore.usersList.map((user: IUser) => user.nationality)));
+    const availableNationalities: NationalitiesType[] = Object.values(Nationalities);;
 
     const handleNationalityChange = (e: SelectChangeEvent) => {
         if( e.target.value === '') handleClearAllFilters();
