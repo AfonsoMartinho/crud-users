@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { Chip, IconButton, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import { useRootStore } from "../../StoreContext";
 import { GendersType } from "../../constants/genders";
 import { Nationalities, NationalitiesType } from "../../constants/nationalities";
-import { IUser } from "../../models/User";
 
 export type FilterType = {
     nationality?: NationalitiesType | '';
@@ -20,7 +18,6 @@ export const Filters = ({ onFilter }: IFiltersProps): JSX.Element => {
     const [activetNationality, setActiveNationality] = React.useState<NationalitiesType | 'All'>('All');
     const [activeGender, setActiveGender] = React.useState<GendersType | ''>('');
     const rootClassName = 'filters';
-    const { usersStore } = useRootStore();
 
     const availableNationalities: NationalitiesType[] = Object.values(Nationalities);;
 
