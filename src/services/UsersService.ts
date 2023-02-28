@@ -13,15 +13,18 @@ export type AvailableParams = {
     pageNumber?: number
 }
 
+export type UserFileds = keyof IUser;
+
 export class UsersService {
     @observable currentSeed?: string;
     @observable currentQueryParameters?: string;
 
-    getUsersWithParams = async (params: AvailableParams):Promise<IUser[]> => {
+    getUsersWithParams = async (params: AvailableParams, excludedFields?: UserFileds[]):Promise<IUser[]> => {
         const { nationality, gender, results, pageNumber } = params;
         const queryParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${results || 12}&page=${pageNumber || 1}`
+        const excludedFieldsQuery = `&exc=${excludedFields || ''}`
 
-        const res = await fetch(`${baseApiURL}${queryParameters}`);
+        const res = await fetch(`${baseApiURL}${queryParameters}${excludedFieldsQuery}`);
         const data = await res.json();
 
         this.currentSeed = data.info.seed

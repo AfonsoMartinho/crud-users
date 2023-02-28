@@ -50,7 +50,7 @@ export class UsersStore implements IUsersStore{
                 registered: user.registered,
                 phone: user.phone,
                 picture: user.picture,
-                nationality: user.nat,
+                nat: user.nat,
             })
         })
     }
@@ -72,7 +72,7 @@ export class UsersStore implements IUsersStore{
     }
 
     @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, pageNumber?: number) => {
-        const usersData = await this.usersService.getUsersWithParams({nationality, gender, pageNumber});
+        const usersData = await this.usersService.getUsersWithParams({nationality, gender, pageNumber}, ["email","age"]);
         this.currentSeed = this.usersService.currentSeed;
         
         if(pageNumber === 1) this.setUsersList(usersData);

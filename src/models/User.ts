@@ -14,5 +14,5 @@ export interface IUser {
     },
     phone: string,
     picture: IPicture,
-    nationality: NationalitiesType
+    nat: NationalitiesType
 }
