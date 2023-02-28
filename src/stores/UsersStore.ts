@@ -1,4 +1,4 @@
-import { observable, action, makeAutoObservable, computed } from "mobx";
+import { observable, action, makeAutoObservable } from "mobx";
 import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { UsersService } from '../services/UsersService'
@@ -72,9 +72,7 @@ export class UsersStore implements IUsersStore{
     }
 
     @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, pageNumber?: number) => {
-        const resultsNumber = 12;
-        const currentServiceParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${resultsNumber}&page=${pageNumber || 1}`
-        const usersData = await this.usersService.getUsersWithParams(currentServiceParameters);
+        const usersData = await this.usersService.getUsersWithParams({nationality, gender, pageNumber});
         this.currentSeed = this.usersService.currentSeed;
         
         if(pageNumber === 1) this.setUsersList(usersData);

@@ -35,7 +35,7 @@ export const Filters = ({ onFilter }: IFiltersProps): JSX.Element => {
             nationality: activetNationality === 'All' ? '' : activetNationality,
             gender: activeGender
         })
-    }, [activeGender, activetNationality, onFilter])
+    }, [activeGender, activetNationality])
     
 
     const handleClearAllFilters = () => {

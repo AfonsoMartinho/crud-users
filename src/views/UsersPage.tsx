@@ -19,7 +19,6 @@ export const UsersPage: React.FC = ():JSX.Element => {
     const fetchUsersFromStore = async () => {
 		await usersStore.getUsersList(nationalityFilter, genderFilter, currentPage)
 		    .then(() => { 
-                console.log('fetching users')
                 setUsersList([...usersStore.usersList])
                 setIsLoading(false);
             })
@@ -38,14 +37,6 @@ export const UsersPage: React.FC = ():JSX.Element => {
         setCurrentPage(1);
         setNationalityFilter(filters.nationality || undefined);
         setGenderFilter(filters.gender || undefined)
-        // setUsersList(usersStore.usersList?.filter((user) => {
-        //     for (const filterKey of Object.keys(filters) as (keyof FilterType)[]) {
-        //         if (filters[filterKey] !== '' && user[filterKey] !== filters[filterKey]) {
-        //             return false;
-        //         }
-        //     }
-        //     return true;
-        // }));
     };
 
     React.useEffect(() => {
@@ -64,7 +55,7 @@ export const UsersPage: React.FC = ():JSX.Element => {
                 :
                 <h1>Empty State</h1>
             }
-            { errorMessage!= undefined && ( <div>{errorMessage}</div> )}
+            { errorMessage!== undefined && ( <div>{errorMessage}</div> )}
           </> )
           }
         </div>
