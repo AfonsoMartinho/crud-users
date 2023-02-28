@@ -5,11 +5,11 @@
     &-wrapper {
         display: flex;
         align-items: center;
-        gap: 16px;
         padding: 6px 8px;
-        background-color: #eaeaea;
-        border-radius: 18px;
         border: 1px solid lightgrey;
+        border-radius: 18px;
+        background-color: #eaeaea;
+        gap: 16px;
     }
 
     &__nationality, &__gender {

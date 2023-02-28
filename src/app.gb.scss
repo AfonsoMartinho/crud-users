@@ -1,4 +1,7 @@
+@use "sass:map";
+
 $gb-scope: ".crud-users";
+
 @import "components";
 #{$gb-scope} {
   // Project pages
