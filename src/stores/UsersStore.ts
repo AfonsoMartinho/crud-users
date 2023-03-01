@@ -15,10 +15,12 @@ export class UsersStore implements IUsersStore{
     @observable usersList: IUser[] = [];
     @observable usersService: UsersService;
     @observable currentSeed?: string;
+    @observable previousExcludedFields?: FilterableUserFields[];
 
     constructor(){
         this.usersService = new UsersService()
         this.currentSeed = undefined;
+        this.previousExcludedFields = undefined;
         makeAutoObservable(this);
     }
 
@@ -75,8 +77,17 @@ export class UsersStore implements IUsersStore{
     @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, pageNumber?: number, excludedFields?: FilterableUserFields[]) => {
         const usersData = await this.usersService.getUsersWithParams({nationality, gender, pageNumber}, excludedFields);
         this.currentSeed = this.usersService.currentSeed;
+
+        // check if theres a new excludedField being added/removed
+        const addedNewFields = () => {
+            if(!this.previousExcludedFields || !excludedFields) return
+            return this.previousExcludedFields.length === excludedFields.length && this.previousExcludedFields.every((element, index) => element === excludedFields[index]);
+        }
         
-        if(pageNumber === 1) this.setUsersList(usersData);
-        else this.addMoreUsersToList(usersData);
+        if (pageNumber === 1 || !addedNewFields()) {
+            this.setUsersList(usersData);
+        } else this.addMoreUsersToList(usersData);
+   
+        this.previousExcludedFields = excludedFields;
     }
 }
