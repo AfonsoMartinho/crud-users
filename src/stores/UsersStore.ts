@@ -3,6 +3,7 @@ import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { UsersService } from '../services/UsersService'
 import { IUser } from "../models/User";
+import { FilterableUserFields } from "../components/FieldsSettings";
 
 export interface IUsersStore {
     readonly usersService: UsersService;
@@ -27,13 +28,13 @@ export class UsersStore implements IUsersStore{
                 id: user.login.uuid,
                 gender: user.gender,
                 name: user.name,
-                age: user.dob.age,
+                age: user.dob?.age,
                 location: user.location,
                 email: user.email,
                 registered: user.registered,
                 phone: user.phone,
                 picture: user.picture,
-                nationality: user.nat,
+                nat: user.nat,
             }
         })
     }
@@ -44,7 +45,7 @@ export class UsersStore implements IUsersStore{
                 id: user.login.uuid,
                 gender: user.gender,
                 name: user.name,
-                age: user.dob.age,
+                age: user.dob?.age,
                 location: user.location,
                 email: user.email,
                 registered: user.registered,
@@ -71,8 +72,8 @@ export class UsersStore implements IUsersStore{
         this.usersService.exportCurrentUsersList(format);
     }
 
-    @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, pageNumber?: number) => {
-        const usersData = await this.usersService.getUsersWithParams({nationality, gender, pageNumber}, ["email","age"]);
+    @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, pageNumber?: number, excludedFields?: FilterableUserFields[]) => {
+        const usersData = await this.usersService.getUsersWithParams({nationality, gender, pageNumber}, excludedFields);
         this.currentSeed = this.usersService.currentSeed;
         
         if(pageNumber === 1) this.setUsersList(usersData);

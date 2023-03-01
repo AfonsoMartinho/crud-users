@@ -1,4 +1,5 @@
 import { observable } from "mobx";
+import { FilterableUserFields } from "../components/FieldsSettings";
 import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { IUser } from "../models/User";
@@ -12,14 +13,11 @@ export type AvailableParams = {
     results?: number,
     pageNumber?: number
 }
-
-export type UserFileds = keyof IUser;
-
 export class UsersService {
     @observable currentSeed?: string;
     @observable currentQueryParameters?: string;
 
-    getUsersWithParams = async (params: AvailableParams, excludedFields?: UserFileds[]):Promise<IUser[]> => {
+    getUsersWithParams = async (params: AvailableParams, excludedFields?: FilterableUserFields[]):Promise<IUser[]> => {
         const { nationality, gender, results, pageNumber } = params;
         const queryParameters = `?nat=${nationality || ''}&gender=${gender || ''}&results=${results || 12}&page=${pageNumber || 1}`
         const excludedFieldsQuery = `&exc=${excludedFields || ''}`

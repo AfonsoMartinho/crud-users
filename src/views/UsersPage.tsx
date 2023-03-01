@@ -6,6 +6,7 @@ import { UsersList } from "../wrappers/UsersList";
 import { ExportActions } from "../components/ExportActions";
 import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
+import { FieldsSettings, FilterableUserFields } from "../components/FieldsSettings";
 
 export const UsersPage: React.FC = ():JSX.Element => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -13,11 +14,12 @@ export const UsersPage: React.FC = ():JSX.Element => {
     const [currentPage, setCurrentPage] = React.useState<number>(1);
     const [nationalityFilter, setNationalityFilter] = React.useState<NationalitiesType | undefined>()
     const [genderFilter, setGenderFilter] = React.useState<GendersType | undefined>()
+    const [excludedFields, setExcludedFields] = React.useState<FilterableUserFields[]>()
 	const [errorMessage, setErrorMessage] = React.useState<string>();
     const { usersStore } = useRootStore();
 
     const fetchUsersFromStore = async () => {
-		await usersStore.getUsersList(nationalityFilter, genderFilter, currentPage)
+		await usersStore.getUsersList(nationalityFilter, genderFilter, currentPage, excludedFields)
 		    .then(() => { 
                 setUsersList([...usersStore.usersList])
                 setIsLoading(false);
@@ -41,13 +43,14 @@ export const UsersPage: React.FC = ():JSX.Element => {
 
     React.useEffect(() => {
         fetchUsersFromStore()
-    },[currentPage, nationalityFilter, genderFilter])
+    },[currentPage, nationalityFilter, genderFilter, excludedFields])
 
     return (
         <div className="users-page">
             { isLoading ? ( <div>isLoading</div> ) : ( 
           <>
             <ExportActions />
+            <FieldsSettings onFieldsChange={(excludedFields) => setExcludedFields(excludedFields)}/>
             <Filters
                 onFilter={(filters: FilterType) => applyFilters(filters)} />
             { usersList && usersList.length > 0 ?
