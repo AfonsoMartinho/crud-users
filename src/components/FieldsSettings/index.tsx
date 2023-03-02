@@ -1,43 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Switch } from "@mui/material";
-import { NationalitiesType } from "../../constants/nationalities";
-import { ILocation, IPicture } from "../../interfaces/common";
-import { Label } from "@mui/icons-material";
+import { ExcludableFields } from "../../constants/excludableFields";
 
-export type FilterableUserFields = keyof {
-    gender: string,
-    dob: number,
-    location: ILocation,
-    email: string,
-    registered: {
-        date: Date,
-        age: number
-    },
-    phone: string,
-    picture: IPicture,
-    nat: NationalitiesType,
+export type ExcludableUserFields = keyof ExcludableUserSwitches
+
+type ExcludableUserSwitches = {
+    gender: boolean,
+    dob: boolean,
+    location: boolean,
+    email: boolean,
+    registered: boolean,
+    phone: boolean,
+    picture: boolean,
+    nat: boolean
 }
 
-
 interface IFieldsSettingProps {
-	onFieldsChange: (fields?: FilterableUserFields[]) => void;
+	onFieldsChange: (fields?: ExcludableUserFields[]) => void;
 }
 
 
 export const FieldsSettings = ({ onFieldsChange }: IFieldsSettingProps): JSX.Element => {
     const rootClassName = 'fields-settings'
-    const excludedFields: FilterableUserFields[] = [ 'gender', 'dob', 'location', 'email', 'registered', 'phone', 'picture', 'nat'];
-    type mySwitches = {
-        gender: boolean,
-        dob: boolean,
-        location: boolean,
-        email: boolean,
-        registered: boolean,
-        phone: boolean,
-        picture: boolean,
-        nat: boolean
-    }
-    const [availableFields, setAvailableFields] = React.useState({
+    const [availableFields, setAvailableFields] = React.useState<ExcludableUserSwitches>({
         gender: true,
         dob: true,
         location: true,
@@ -49,18 +34,19 @@ export const FieldsSettings = ({ onFieldsChange }: IFieldsSettingProps): JSX.Ele
     })
 
     React.useEffect(() => {
-        const fieldsToExclude:FilterableUserFields[] = [];
+        const fieldsToExclude:ExcludableUserFields[] = [];
         for (const key in availableFields) {
-            if(!availableFields[key as FilterableUserFields]) fieldsToExclude.push(key as FilterableUserFields);
+            if(!availableFields[key as ExcludableUserFields]) fieldsToExclude.push(key as ExcludableUserFields);
         } 
         onFieldsChange(fieldsToExclude)
     }, [availableFields])
 
     const passAllFieldsToTrue = () => {
-        const myObject: mySwitches = Object.fromEntries(
-            Object.keys(availableFields).map(key => [key, true])
-        ) as mySwitches;
-        setAvailableFields(myObject)
+        setAvailableFields(
+            Object.fromEntries(
+                Object.keys(availableFields).map(key => [key, true])
+            ) as ExcludableUserSwitches
+        )
     }
     
 
@@ -69,20 +55,15 @@ export const FieldsSettings = ({ onFieldsChange }: IFieldsSettingProps): JSX.Ele
             <h2>Choose wich users fields to show</h2>
             <div className={`${rootClassName}__list`}>
                 <Button onClick={()=>passAllFieldsToTrue()}>Select All</Button>
-                { excludedFields.map((field)=> { return (
+                { Object.keys(availableFields).map((field) => (
                     <div className={`${rootClassName}__list-item`} key={field}>
-                        <h5>{field}</h5>
+                        <h5>{ExcludableFields[field as ExcludableUserFields]}</h5>
                         <Switch
-                            checked={availableFields[field]}
-                            onChange={
-                                (e)=>{
-                                    setAvailableFields({...availableFields, [field]: e.target.checked})
-                                    console.log(field);
-                                }
-                            }
+                            checked={availableFields[field as ExcludableUserFields]}
+                            onChange={(e)=>{setAvailableFields({...availableFields, [field]: e.target.checked})}}
                             value={field} />
                     </div>
-                    )})
+                    ))
                 }
             </div>
         </div>

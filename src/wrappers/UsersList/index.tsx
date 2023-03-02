@@ -1,8 +1,7 @@
 import * as React from 'react';
+import { Avatar, Card, CardContent, CardHeader, Typography } from '@mui/material';
+import { green } from '@mui/material/colors';
 import { IUser } from '../../models/User';
-import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { green, indigo } from '@mui/material/colors';
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 interface IUsersListProps {
@@ -52,7 +51,10 @@ export const UsersList = ({ onLoadMore, users }: IUsersListProps): JSX.Element =
 							}
 							subheader={
 								// TODO: Display Gender as icon
-								user.gender && <Typography>{user.gender}, {user.age} years old</Typography>
+								<Typography>
+									{ user.gender && <span>{user.gender}</span> }
+									{ user.age && <span>, {user.age} years old</span> }
+								</Typography>
 							}
 						/>
 						<CardContent>
