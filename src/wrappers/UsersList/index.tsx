@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { Avatar, Card, CardContent, CardHeader, Typography } from '@mui/material';
-import { green } from '@mui/material/colors';
 import { IUser } from '../../models/User';
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { UserCard } from '../../components/UserCard';
@@ -31,13 +29,12 @@ export const UsersList = ({ onLoadMore, users }: IUsersListProps): JSX.Element =
 				next={() => handleInfiniteScroll()}
 				hasMore={true}
 				loader={loaderElement()}
-				endMessage={<h1>ay! You have seen it all</h1>}
+				endMessage={<h1>No more users!</h1>}
 			>
 				<div className={`${rootClassName}__content`}>
 					{ users && users.map((user) => (
 						<UserCard user={user} />
-					))
-					}
+					)) }
 				</div>
 			</InfiniteScroll>
 		</div>

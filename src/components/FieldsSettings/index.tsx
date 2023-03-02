@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Switch } from "@mui/material";
+import { Button, List, ListItem, ListItemText, Switch, Typography } from "@mui/material";
 import { ExcludableFields } from "../../constants/excludableFields";
 
 export type ExcludableUserFields = keyof ExcludableUserSwitches
@@ -52,20 +52,22 @@ export const FieldsSettings = ({ onFieldsChange }: IFieldsSettingProps): JSX.Ele
 
     return (
         <div className={rootClassName}>
-            <h2>Choose wich users fields to show</h2>
-            <div className={`${rootClassName}__list`}>
-                <Button onClick={()=>passAllFieldsToTrue()}>Select All</Button>
+            <Typography className={`${rootClassName}__title`} fontSize={16} fontWeight="500" textAlign="center">User Fields to show</Typography>
+            <List className={`${rootClassName}__list`}>
+                <ListItem>
+                    <Button onClick={()=>passAllFieldsToTrue()}>Select All</Button>
+                </ListItem>
                 { Object.keys(availableFields).map((field) => (
-                    <div className={`${rootClassName}__list-item`} key={field}>
-                        <h5>{ExcludableFields[field as ExcludableUserFields]}</h5>
+                    <ListItem key={field}>
+                        <ListItemText primary={ExcludableFields[field as ExcludableUserFields]} />
                         <Switch
                             checked={availableFields[field as ExcludableUserFields]}
                             onChange={(e)=>{setAvailableFields({...availableFields, [field]: e.target.checked})}}
                             value={field} />
-                    </div>
+                    </ListItem>
                     ))
                 }
-            </div>
+            </List>
         </div>
     )
 }
