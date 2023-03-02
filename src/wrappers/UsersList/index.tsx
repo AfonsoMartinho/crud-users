@@ -3,6 +3,7 @@ import { Avatar, Card, CardContent, CardHeader, Typography } from '@mui/material
 import { green } from '@mui/material/colors';
 import { IUser } from '../../models/User';
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { UserCard } from '../../components/UserCard';
 
 interface IUsersListProps {
 	onDeleteUser?: (userId: string) => void;
@@ -34,38 +35,7 @@ export const UsersList = ({ onLoadMore, users }: IUsersListProps): JSX.Element =
 			>
 				<div className={`${rootClassName}__content`}>
 					{ users && users.map((user) => (
-					<Card variant='outlined' className={`${rootClassName}-card`} key={user.id}>
-						<CardHeader
-							className={`${rootClassName}-card__header`}
-							avatar={
-								user.picture && <Avatar className={`${rootClassName}-card__avatar`} alt="User Avatar" src={user.picture.large} sx={{ width: 96, height: 96 }} variant="rounded" />
-							}
-							title={
-								<div className={`${rootClassName}-card__header-text`}>
-									<div className={`${rootClassName}-card__location`}>
-										{ user.nat && <Avatar sx={{ bgcolor: green[500] }} variant="rounded">{user.nat}</Avatar> }
-										{ user.location && <Typography>{user.location.country}</Typography> }
-									</div>
-									<Typography className={`${rootClassName}-card__name`}>{`${user.name.title} ${user.name.first} ${user.name.last}`}</Typography>
-								</div>
-							}
-							subheader={
-								// TODO: Display Gender as icon
-								<Typography>
-									{ user.gender && <span>{user.gender}</span> }
-									{ user.age && <span>, {user.age} years old</span> }
-								</Typography>
-							}
-						/>
-						<CardContent>
-							{/* TODO: Add icons as label ex: phone: 📞 - 910227773 */}
-							<div className={`${rootClassName}-card__content`}>
-								{ user.email && <Typography>{user.email}</Typography> }
-								{ user.registered?.age && <Typography>Member since {user.registered.age} yrs</Typography> }
-								{ user.phone && <Typography>{user.phone}</Typography> }
-							</div>
-						</CardContent>
-					</Card>
+						<UserCard user={user} />
 					))
 					}
 				</div>
