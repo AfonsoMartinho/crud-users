@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Divider, List, ListItem, ListItemText, Switch, Typography } from "@mui/material";
-import { ExcludableFields } from "../../constants/excludableFields";
-import { UsersStore } from "../../stores/UsersStore";
+import { Button, Divider, IconButton, List, ListItem, ListItemText, Switch, Typography } from "@mui/material";
+import CancelIcon from '@mui/icons-material/Cancel';
 import { useRootStore } from "../../StoreContext";
+import { ExcludableFields } from "../../constants/excludableFields";
+
 
 export type ExcludableUserFields = keyof ExcludableUserSwitches
 
@@ -19,10 +20,11 @@ export type ExcludableUserSwitches = {
 
 interface IFieldsSettingProps {
 	onFieldsChange: (fields: ExcludableUserFields[] | []) => void;
+    onCloseDrawer?: () => void;
 }
 
 
-export const FieldsSettings = ({ onFieldsChange }: IFieldsSettingProps): JSX.Element => {
+export const FieldsSettings = ({ onFieldsChange, onCloseDrawer }: IFieldsSettingProps): JSX.Element => {
     const rootClassName = 'fields-settings'
     const { usersStore } = useRootStore();
     const [isAllChecked, setIsAllChecked] = useState<boolean>(true)
@@ -87,7 +89,14 @@ export const FieldsSettings = ({ onFieldsChange }: IFieldsSettingProps): JSX.Ele
 
     return (
         <div className={rootClassName}>
-            <Typography variant="h5" className={`${rootClassName}__title`}>User Fields to show</Typography>
+            <div className={`${rootClassName}__header`}>
+                { onCloseDrawer && (
+                    <IconButton onClick={()=>onCloseDrawer()} >
+                        <CancelIcon />
+                    </IconButton>
+                )}
+            <Typography variant="h5" className={`${rootClassName}__title`}> User Fields to show</Typography>
+            </div>
             <List className={`${rootClassName}__list`}>
                 <ListItem className={`${rootClassName}__list-all`}>
                     <Typography >Select All</Typography>
