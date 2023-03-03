@@ -1,6 +1,7 @@
-import { Button, Drawer } from '@mui/material';
-import React, { useEffect, useState } from 'react'
-import { ExcludableUserFields, ExcludableUserSwitches, FieldsSettings } from '../../components/FieldsSettings';
+import React, { useState } from 'react'
+import { Drawer, IconButton } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { ExcludableUserFields, FieldsSettings } from '../../components/FieldsSettings';
 
 interface ISettingsBarProps {
     onFieldsChange: (fields?: ExcludableUserFields[]) => void;
@@ -8,7 +9,7 @@ interface ISettingsBarProps {
 
 const SettingsBar = ({onFieldsChange}: ISettingsBarProps) => {
   const rootClassName = 'settings-bar'
-  const [isOpen, setIsOpen] = React.useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const handleFieldsChange = (fields: ExcludableUserFields[]) => {
     onFieldsChange(fields)
@@ -18,13 +19,15 @@ const SettingsBar = ({onFieldsChange}: ISettingsBarProps) => {
 
   return (
     <div className={rootClassName}>
-        <Button onClick={()=>setIsOpen(true)}>Settings</Button>
+        <IconButton color="primary" onClick={()=>setIsOpen(true)} >
+          <SettingsIcon />
+        </IconButton>
         <Drawer
             anchor="right"
             open={isOpen}
             onClose={()=>setIsOpen(false)}
         >
-            <FieldsSettings onFieldsChange={(fields: ExcludableUserFields[]) => handleFieldsChange(fields)}/>
+            <FieldsSettings onCloseDrawer={() => setIsOpen(false)} onFieldsChange={(fields: ExcludableUserFields[]) => handleFieldsChange(fields)}/>
         </Drawer>
     </div>
   )
