@@ -3,7 +3,7 @@ import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { UsersService } from '../services/UsersService'
 import { IUser } from "../models/User";
-import { FilterableUserFields } from "../components/FieldsSettings";
+import { ExcludableUserFields } from "../components/FieldsSettings";
 
 export interface IUsersStore {
     readonly usersService: UsersService;
@@ -15,7 +15,7 @@ export class UsersStore implements IUsersStore{
     @observable usersList: IUser[] = [];
     @observable usersService: UsersService;
     @observable currentSeed?: string;
-    @observable previousExcludedFields?: FilterableUserFields[];
+    @observable previousExcludedFields?: ExcludableUserFields[];
 
     constructor(){
         this.usersService = new UsersService()
@@ -74,7 +74,8 @@ export class UsersStore implements IUsersStore{
         this.usersService.exportCurrentUsersList(format);
     }
 
-    @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, pageNumber?: number, excludedFields?: FilterableUserFields[]) => {
+
+    @action getUsersList = async (nationality?:NationalitiesType, gender?: GendersType, pageNumber?: number, excludedFields?: ExcludableUserFields[]) => {
         const usersData = await this.usersService.getUsersWithParams({nationality, gender, pageNumber}, excludedFields);
         this.currentSeed = this.usersService.currentSeed;
 

@@ -2,7 +2,12 @@
 
 $gb-scope: ".crud-users";
 
-@import "components";
+@import "./scss/theme";
+@import "./scss/helpers";
+
 #{$gb-scope} {
   // Project pages
+  @import "components";
 }
+
+@import "./components/FieldsSettings";

@@ -1,18 +1,12 @@
-@import "./components/FieldsSettings";
+// Project components
+@import "./components/Filters";
+@import "./components/ExportActions";
+@import "./components/UserCard";
 
-#{$gb-scope} {
-  @import "./scss/theme";
-  @import "./scss/helpers";
-  
-  // Project components
-  @import "./components/Filters";
-  @import "./components/ExportActions";
-  @import "./components/UserCard";
-  
-  // Project wrapper components
-  @import "./wrappers/UsersList";
-  @import "./wrappers/SettingsBar";
-  
-  // Reskins
-}
+// Project wrapper components
+@import "./wrappers/UsersList";
+@import "./wrappers/SettingsBar";
+
+// Reskins
+
 

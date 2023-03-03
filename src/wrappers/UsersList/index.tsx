@@ -32,8 +32,8 @@ export const UsersList = ({ onLoadMore, users }: IUsersListProps): JSX.Element =
 				endMessage={<h1>No more users!</h1>}
 			>
 				<div className={`${rootClassName}__content`}>
-					{ users && users.map((user) => (
-						<UserCard user={user} />
+					{ users && users.map((user, i) => (
+						<UserCard user={user} key={i} />
 					)) }
 				</div>
 			</InfiniteScroll>

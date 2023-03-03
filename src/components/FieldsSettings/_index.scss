@@ -1,3 +1,19 @@
 .fields-settings {
     padding: 16px 0;
+    background-color: map.get($brand-color, dark-blue);
+    color: map.get($brand-color, contrast-text);
+    
+    &__title {
+        padding: 0 32px;
+    }
+
+    &__list-all {
+        display: flex;
+        justify-content: space-between !important;
+
+        p {
+            font-size: 24px;
+            font-weight: 500;
+        }
+    }
 }
