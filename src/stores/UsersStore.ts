@@ -3,7 +3,7 @@ import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { UsersService } from '../services/UsersService'
 import { IUser } from "../models/User";
-import { ExcludableUserFields } from "../components/FieldsSettings";
+import { ExcludableUserFields } from "../components/FieldsSettings/content";
 
 export interface IUsersStore {
     readonly usersService: UsersService;

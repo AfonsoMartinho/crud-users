@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Chip, IconButton, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
+import { Button, Chip, IconButton, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import { GendersType } from "../../constants/genders";
 import { Nationalities, NationalitiesType } from "../../constants/nationalities";
@@ -79,10 +79,10 @@ export const Filters = ({ onFilter }: IFiltersProps): JSX.Element => {
                         ))}
                     </Select>
                 </div>
-            <IconButton color="primary" component="label" onClick={()=>handleClearAllFilters()}>
+            <Button size="small" variant="outlined" color="secondary" component="label" onClick={()=>handleClearAllFilters()}>
                 <input hidden />
-                <CloseIcon />
-            </IconButton>
+                Clear Filters
+            </Button>
             </div>
         </div>
     )

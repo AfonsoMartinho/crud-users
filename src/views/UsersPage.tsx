@@ -6,8 +6,9 @@ import { UsersList } from "../wrappers/UsersList";
 import { ExportActions } from "../components/ExportActions";
 import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
-import { ExcludableUserFields } from "../components/FieldsSettings";
-import SettingsBar from "../wrappers/SettingsBar";
+import { ExcludableUserFields } from "../components/FieldsSettings/content";
+import FieldsSettings from "../components/FieldsSettings";
+import { ActionsBar } from "../wrappers/ActionsBar";
 
 export const UsersPage: React.FC = ():JSX.Element => {
     const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -50,10 +51,7 @@ export const UsersPage: React.FC = ():JSX.Element => {
         <div className="users-page">
             { isLoading ? ( <div>isLoading</div> ) : ( 
           <>
-            <ExportActions />
-            <SettingsBar onFieldsChange={(excludedFields) => setExcludedFields(excludedFields)}/>
-            <Filters
-                onFilter={(filters: FilterType) => applyFilters(filters)} />
+            <ActionsBar onFilter={(filters: FilterType) => applyFilters(filters)} onFieldsChange={(excludedFields) => setExcludedFields(excludedFields)} />
             { usersList && usersList.length > 0 ?
                 <UsersList users={[...usersList]} onLoadMore={() => loadMoreUsers()} onDeleteUser={(userId: string)=> usersStore.deleteUser(userId)}/>
                 :

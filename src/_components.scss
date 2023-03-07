@@ -2,10 +2,11 @@
 @import "./components/Filters";
 @import "./components/ExportActions";
 @import "./components/UserCard";
+@import "./components/FieldsSettings";
 
 // Project wrapper components
 @import "./wrappers/UsersList";
-@import "./wrappers/SettingsBar";
+@import "./wrappers/ActionsBar";
 
 // Reskins
 

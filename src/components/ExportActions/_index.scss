@@ -2,18 +2,5 @@
     display: flex;
     align-items: center;
     width: fit-content;
-    gap: 8px;
-    padding: 6px 8px;
     border-radius: 18px;
-    background-color: #eaeaea;
-
-    &__buttons {
-        display: flex;
-        align-items: center;
-        padding: 6px 8px;
-        border: 1px solid lightgrey;
-        border-radius: 18px;
-        gap: 16px;
-        background-color: #eaeaeabb;
-    }
 }

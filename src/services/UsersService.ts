@@ -1,5 +1,5 @@
 import { observable } from "mobx";
-import { FilterableUserFields } from "../components/FieldsSettings";
+import { FilterableUserFields } from "../components/FieldsSettings/content";
 import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { IUser } from "../models/User";
