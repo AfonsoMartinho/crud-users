@@ -85,7 +85,7 @@ export class UsersStore implements IUsersStore{
             return this.previousExcludedFields.length === excludedFields.length && this.previousExcludedFields.every((element, index) => element === excludedFields[index]);
         }
         
-        if (pageNumber === 1 || !addedNewFields()) {
+        if (pageNumber === 1 && !addedNewFields()) {
             this.setUsersList(usersData);
         } else this.addMoreUsersToList(usersData);
    

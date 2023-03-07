@@ -62,10 +62,7 @@ export const FieldsSettings = ({ onFieldsChange, onCloseDrawer }: IFieldsSetting
         
         usersStore.previousExcludedFields.forEach(field => {
                 parsedPreviousExcludedFields[field] = false;
-        }) 
-
-        console.log('Setting')
-        
+        })         
         setAvailableFields(parsedPreviousExcludedFields)
     }
 
