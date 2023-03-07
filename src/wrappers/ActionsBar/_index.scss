@@ -1,9 +1,13 @@
 .actions-bar {
     display: flex;
+    position: sticky;
+    top: 0;
     align-items: center;
     justify-content: space-between;
     padding: 6px 8px;
     border: 1px solid black;
+    background-color: black;
+    z-index: 1;
 
     &__right-content {
         display: flex;
