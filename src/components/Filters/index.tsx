@@ -63,6 +63,7 @@ export const Filters = ({ onFilter }: IFiltersProps): JSX.Element => {
                 <div className={`${rootClassName}__nationality`}>
                     <Typography>Nationality:</ Typography>
                     <Select
+                        className={`${rootClassName}__nationality-select`}
                         labelId="nationality-select-label"
                         id="natinality-select"
                         label="Nationality"
@@ -79,10 +80,10 @@ export const Filters = ({ onFilter }: IFiltersProps): JSX.Element => {
                         ))}
                     </Select>
                 </div>
-            <Button size="small" variant="outlined" color="secondary" component="label" onClick={()=>handleClearAllFilters()}>
-                <input hidden />
-                Clear Filters
-            </Button>
+                <Button className={`${rootClassName}__clear-button`} size="small" variant="outlined" color="warning" component="label" onClick={()=>handleClearAllFilters()}>
+                    <input hidden />
+                    Clear Filters
+                </Button>
             </div>
         </div>
     )

@@ -5,9 +5,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 6px 8px;
-    border: 1px solid black;
-    background-color: black;
+    background-color: map.get($brand-color, grey-dark);
+    box-shadow: $box-shadow-nav;
     z-index: 1;
+    
 
     &__right-content {
         display: flex;

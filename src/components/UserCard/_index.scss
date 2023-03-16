@@ -3,22 +3,55 @@ $user-card-width: 320px;
 .user-card {
     width: $user-card-width;
     margin-top: 12px;
-    background-color: map.get($brand-color, dark);
-    color: map.get($brand-color, contrast-text);
-    
+    background-color: map.get($brand-color, grey-dark);
+    box-shadow: $box-shadow-card;
+
+    &__subheader{
+        display: flex;
+    }
+
     &__location {
         display: flex;
         align-items: center;
         margin-bottom: 8px;
         border-radius: 8px;
-        background-color: rgb(121 119 119 / 50%);
-        gap: 8px;
+        color: map.get($brand-color, grey-light);
+        
+        &-flag {
+            border-top: .5px solid map.get($brand-color, grey-medium);
+            border-bottom: .5px solid map.get($brand-color, grey-medium);
+            border-left: .5px solid map.get($brand-color, grey-medium);
+            border-radius: 8px 0 0 8px;
+            background-color: map.get($brand-color, primary-dark);
+        }
+        
+        &-country {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 40px;
+            padding-left: 8px;
+            border-top: .5px solid map.get($brand-color, grey-medium);
+            border-right: .5px solid map.get($brand-color, grey-medium);
+            border-bottom: .5px solid map.get($brand-color, grey-medium);
+            border-radius: 0 8px 8px 0;
+        }
     }
 
     &__name {
         max-width: calc($user-card-width / 2);
+        margin-left: 4px;
+        font-size: 18px;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow-y: clip;
     }
+
+    &__content {
+        &-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+    } 
 }

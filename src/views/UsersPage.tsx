@@ -1,13 +1,11 @@
 import React from "react";
 import { IUser } from "../models/User";
 import { useRootStore } from "../StoreContext";
-import { Filters, FilterType } from "../components/Filters";
+import {  FilterType } from "../components/Filters";
 import { UsersList } from "../wrappers/UsersList";
-import { ExportActions } from "../components/ExportActions";
 import { GendersType } from "../constants/genders";
 import { NationalitiesType } from "../constants/nationalities";
 import { ExcludableUserFields } from "../components/FieldsSettings/content";
-import FieldsSettings from "../components/FieldsSettings";
 import { ActionsBar } from "../wrappers/ActionsBar";
 
 export const UsersPage: React.FC = ():JSX.Element => {

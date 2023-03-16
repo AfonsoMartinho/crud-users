@@ -1,7 +1,10 @@
 import React from "react";
 import { Avatar, Card, CardContent, CardHeader, Typography } from "@mui/material";
-import { green } from "@mui/material/colors";
 import { IUser } from "../../models/User";
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
+import MaleOutlinedIcon from '@mui/icons-material/MaleOutlined';
+import FemaleOutlinedIcon from '@mui/icons-material/FemaleOutlined';
 
 interface IUserCardProps {
 	user: IUser;
@@ -10,7 +13,7 @@ interface IUserCardProps {
 export const UserCard = ({user}: IUserCardProps):JSX.Element => {
 	const rootClassName = 'user-card';
     return (
-        <Card variant='outlined' className={`${rootClassName}`} key={user.id}>
+        <Card variant='outlined'  className={rootClassName} key={user.id}>
             <CardHeader
                 className={`${rootClassName}__header`}
                 avatar={
@@ -18,27 +21,27 @@ export const UserCard = ({user}: IUserCardProps):JSX.Element => {
                 }
                 title={
                     <div className={`${rootClassName}__header-text`}>
-                        <div className={`${rootClassName}__location`}>
-                            { user.nat && <Avatar sx={{ bgcolor: green[500] }} variant="rounded">{user.nat}</Avatar> }
-                            { user.location && <Typography>{user.location.country}</Typography> }
-                        </div>
+                        { user.location && ( 
+                            <div className={`${rootClassName}__location`}>
+                                    <Avatar className={`${rootClassName}__location-flag`} variant="rounded">{user.nat}</Avatar>
+                                    <Typography className={`${rootClassName}__location-country`}>{user.location.country}</Typography>
+                            </div>
+                        )}
                         <Typography className={`${rootClassName}__name`}>{`${user.name.title} ${user.name.first} ${user.name.last}`}</Typography>
                     </div>
                 }
                 subheader={
-                    // TODO: Display Gender as icon
-                    <Typography>
-                        { user.gender && <span>{user.gender}</span> }
-                        { user.age && <span>, {user.age} years old</span> }
+                    <Typography className={`${rootClassName}__subheader`}>
+                        { user.gender && <span>{ user.gender === 'male' ? (<MaleOutlinedIcon color="primary"/>) : (<FemaleOutlinedIcon color="secondary"/>)}</span> }
+                        { user.age && <span>{user.age} years old</span> }
                     </Typography>
                 }
             />
             <CardContent>
-                {/* TODO: Add icons as label ex: phone: 📞 - 910227773 */}
                 <div className={`${rootClassName}__content`}>
-                    { user.email && <Typography>{user.email}</Typography> }
-                    { user.registered?.age && <Typography>Member since {user.registered.age} yrs</Typography> }
-                    { user.phone && <Typography>{user.phone}</Typography> }
+                    { user.email && <Typography className={`${rootClassName}__content-row`}><EmailRoundedIcon />{user.email}</Typography> }
+                    { user.phone && <Typography className={`${rootClassName}__content-row`}><LocalPhoneRoundedIcon />{user.phone}</Typography> }
+                    { user.registered?.age && <Typography className={`${rootClassName}__content-bottom-info ${rootClassName}__content-row`}><b>Member since:</b>{user.registered.age} yrs</Typography> }
                 </div>
             </CardContent>
         </Card>

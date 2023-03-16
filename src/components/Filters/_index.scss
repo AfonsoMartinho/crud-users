@@ -15,4 +15,12 @@
         align-items: center;
         gap: 8px;
     }
+
+    &__nationality-select {
+        height: 32px;
+    }
+
+    &__clear-button {
+        text-transform: capitalize;
+    }
 }
