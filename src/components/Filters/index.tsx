@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Button, Chip, IconButton, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
 import { GendersType } from "../../constants/genders";
 import { Nationalities, NationalitiesType } from "../../constants/nationalities";
 
@@ -17,6 +17,7 @@ interface IFiltersProps {
 export const Filters = ({ onFilter }: IFiltersProps): JSX.Element => {
     const [activetNationality, setActiveNationality] = React.useState<NationalitiesType | 'All'>('All');
     const [activeGender, setActiveGender] = React.useState<GendersType | ''>('');
+    const [openMobileMenu, setOpenMobileMenu] = React.useState<boolean>(false);
     const rootClassName = 'filters';
 
     const availableNationalities: NationalitiesType[] = Object.values(Nationalities);;
@@ -45,6 +46,14 @@ export const Filters = ({ onFilter }: IFiltersProps): JSX.Element => {
 
     return (
         <div className={rootClassName}>
+            <div className="hide-mobile">
+                <IconButton color="primary" onClick={()=>setOpenMobileMenu(true)} >
+                    <MenuIcon />
+                </IconButton>
+            </div>
+            <div className="hide-desktop">
+
+            </div>
             <div className={`${rootClassName}-wrapper`}>
                 <div className={`${rootClassName}__gender`}>
                     <Chip 

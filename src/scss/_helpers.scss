@@ -1,0 +1,42 @@
+// responsive mixins
+$screen-mobile: 480px;
+$screen-tablet: 768px;
+$screen-desktop: 1024px;
+
+// Small devices
+@mixin mobile {
+    @media (max-width: #{$screen-mobile}) {
+        @content;
+    }
+ }
+ 
+ // Medium devices
+ @mixin tablet {
+    @media (min-width: #{$screen-mobile}) and  (max-width: #{$screen-desktop}) {
+        @content;
+    }
+ }
+ 
+ // Large devices
+ @mixin desktop {
+    @media (min-width: #{$screen-desktop}) {
+        @content;
+    }
+ }
+
+
+.hide-mobile{
+    @include mobile {
+        display: none !important;
+    }
+}
+
+.hide-desktop{
+    @include desktop {
+        display: none !important;
+    }
+
+    @include tablet {
+        display: none !important;
+    }
+}

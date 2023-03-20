@@ -2,6 +2,7 @@ import * as React from 'react';
 import { IUser } from '../../models/User';
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { UserCard } from '../../components/UserCard';
+import { Container } from '@mui/material';
 
 interface IUsersListProps {
 	onDeleteUser?: (userId: string) => void;
@@ -31,11 +32,11 @@ export const UsersList = ({ onLoadMore, users }: IUsersListProps): JSX.Element =
 				loader={loaderElement()}
 				endMessage={<h1>No more users!</h1>}
 			>
-				<div className={`${rootClassName}__content`}>
+				<Container maxWidth="xl" className={`${rootClassName}__content`}>
 					{ users && users.map((user, i) => (
 						<UserCard user={user} key={i} />
 					)) }
-				</div>
+				</Container>
 			</InfiniteScroll>
 		</div>
 	);
