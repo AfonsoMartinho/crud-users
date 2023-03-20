@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Divider, IconButton, List, ListItem, ListItemText, Switch, Typography } from "@mui/material";
-import CancelIcon from '@mui/icons-material/Cancel';
+import CloseIcon from '@mui/icons-material/Close';
 import { useRootStore } from "../../StoreContext";
 import { ExcludableFields } from "../../constants/excludableFields";
 
@@ -87,18 +87,17 @@ export const FieldsSettingsContent = ({ onFieldsChange, onCloseDrawer }: IFields
     return (
         <div className={rootClassName}>
             <div className={`${rootClassName}__header`}>
+                <Typography variant="h5" className={`${rootClassName}__header-title`}> User fields to show</Typography>
                 { onCloseDrawer && (
-                    <IconButton onClick={()=>onCloseDrawer()} >
-                        <CancelIcon />
+                    <IconButton onClick={()=>onCloseDrawer()}  className={`${rootClassName}__header-close-btn`}>
+                        <CloseIcon fontSize="small"/>
                     </IconButton>
                 )}
-            <Typography variant="h5" className={`${rootClassName}__title`}> User Fields to show</Typography>
             </div>
             <List className={`${rootClassName}__list`}>
                 <ListItem className={`${rootClassName}__list-all`}>
-                    <Typography >Select All</Typography>
+                    <Typography variant="h6">Select All</Typography>
                     <Switch
-                        color="default"
                         checked={isAllChecked}
                         onChange={(e)=>changeAllFilters(e.target.checked)}
                         value="all" />
@@ -108,7 +107,6 @@ export const FieldsSettingsContent = ({ onFieldsChange, onCloseDrawer }: IFields
                     <ListItem key={field}>
                         <ListItemText primary={ExcludableFields[field as ExcludableUserFields]} />
                         <Switch
-                            color="default"
                             checked={availableFields[field as ExcludableUserFields]}
                             onChange={(e)=>{setAvailableFields({...availableFields, [field]: e.target.checked})}}
                             value={field} />
@@ -116,8 +114,8 @@ export const FieldsSettingsContent = ({ onFieldsChange, onCloseDrawer }: IFields
                     ))
                 }
                 <Divider />
-                <ListItem className={`${rootClassName}__list-all`}>
-                    <Button variant="outlined" onClick={()=> handleSettingsChanges()}>Apply Changes</Button>
+                <ListItem className={`${rootClassName}__save-btn`}>
+                    <Button variant="contained"  onClick={()=> handleSettingsChanges()}>Apply Changes</Button>
                 </ListItem>
             </List>
         </div>

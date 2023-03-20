@@ -41,7 +41,7 @@ export const UserCard = ({user}: IUserCardProps):JSX.Element => {
                 <div className={`${rootClassName}__content`}>
                     { user.email && <Typography className={`${rootClassName}__content-row`}><EmailRoundedIcon />{user.email}</Typography> }
                     { user.phone && <Typography className={`${rootClassName}__content-row`}><LocalPhoneRoundedIcon />{user.phone}</Typography> }
-                    { user.registered?.age && <Typography className={`${rootClassName}__content-bottom-info ${rootClassName}__content-row`}><b>Member since:</b>{user.registered.age} yrs</Typography> }
+                    { user.registered?.age && <Typography className={`${rootClassName}__content-row`}><b>Member since:</b>{user.registered.age} yrs</Typography> }
                 </div>
             </CardContent>
         </Card>
