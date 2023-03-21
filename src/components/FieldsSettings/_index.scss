@@ -1,0 +1,43 @@
+.fields-settings-content {
+    position: relative;
+    min-width: 300px;
+    
+    &__header {
+        padding: 16px;
+        background-color: map.get($brand-color, primary-dark);
+        color: map.get($brand-color, contrast-text);
+        
+        &-title {
+            color: map.get($brand-color, contrast-text);
+            text-align: center;
+        }
+
+        &-close-btn {
+            position: absolute !important;
+            top: 0;
+            right: 0;
+
+            svg {
+                color: map.get($brand-color, contrast-text);
+            }
+        }
+    }
+    
+    &__title {
+        padding: 0 32px;
+    }
+
+    &__list-all {
+        display: flex;
+        justify-content: space-between !important;
+
+        p {
+            font-size: 24px;
+            font-weight: 500;
+        }
+    }
+
+    &__save-btn > button{
+        width: 100%;
+    }
+}

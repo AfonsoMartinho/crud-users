@@ -1,0 +1,19 @@
+.actions-bar {
+    display: flex;
+    position: sticky;
+    top: 0;
+    align-items: center;
+    justify-content: space-between;
+    height: $actions-bar-height;
+    padding: 6px 8px;
+    background-color: map.get($brand-color, grey-dark);
+    box-shadow: $box-shadow-nav;
+    z-index: 1;
+    
+
+    &__right-content {
+        display: flex;
+        gap: 8px;
+        z-index: 1;
+    }
+}

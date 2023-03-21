@@ -1,10 +1,13 @@
-#{$gb-scope} {
-  @import "./scss/theme";
-  @import "./scss/helpers";
+// Project components
+@import "./components/Filters";
+@import "./components/ExportActions";
+@import "./components/UserCard";
+@import "./components/FieldsSettings";
 
-  // Project components
+// Project wrapper components
+@import "./wrappers/UsersList";
+@import "./wrappers/ActionsBar";
 
-  // Project wrapper components
+// Reskins
 
-  // Reskins
-}
+
