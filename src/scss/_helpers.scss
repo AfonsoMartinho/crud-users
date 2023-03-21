@@ -1,3 +1,6 @@
+// global variables
+$actions-bar-height: 52px;
+
 // responsive mixins
 $screen-mobile: 480px;
 $screen-tablet: 768px;
@@ -12,7 +15,7 @@ $screen-desktop: 1024px;
  
  // Medium devices
  @mixin tablet {
-    @media (min-width: #{$screen-mobile}) and  (max-width: #{$screen-desktop}) {
+    @media (max-width: #{$screen-desktop}) {
         @content;
     }
  }
@@ -31,12 +34,14 @@ $screen-desktop: 1024px;
     }
 }
 
-.hide-desktop{
-    @include desktop {
+.hide-tablet{
+    @include tablet {
         display: none !important;
     }
+}
 
-    @include tablet {
+.hide-desktop{
+    @include desktop {
         display: none !important;
     }
 }

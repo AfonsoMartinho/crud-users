@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import classNames from "classnames";
 import { Button, Chip, IconButton, MenuItem, Select, SelectChangeEvent, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { GendersType } from "../../constants/genders";
@@ -46,15 +47,12 @@ export const Filters = ({ onFilter }: IFiltersProps): JSX.Element => {
 
     return (
         <div className={rootClassName}>
-            <div className="hide-mobile">
-                <IconButton color="primary" onClick={()=>setOpenMobileMenu(true)} >
+            <div className={`${rootClassName}__mobile-toggle hide-desktop`}>
+                <IconButton color="primary" onClick={()=>setOpenMobileMenu(!openMobileMenu)} >
                     <MenuIcon />
                 </IconButton>
             </div>
-            <div className="hide-desktop">
-
-            </div>
-            <div className={`${rootClassName}-wrapper`}>
+            <div className={classNames(`${rootClassName}-wrapper`, {'open-mobile': openMobileMenu})} >
                 <div className={`${rootClassName}__gender`}>
                     <Chip 
                         label="Female" 
