@@ -39,16 +39,13 @@
         display: flex;
         align-items: center;
         gap: 8px;
-        z-index: -1;
     }
 
     &__nationality-select {
         height: 32px;
-        z-index: -1;
     }
 
     &__clear-button {
         text-transform: capitalize;
-        z-index: -1;
     }
 }
