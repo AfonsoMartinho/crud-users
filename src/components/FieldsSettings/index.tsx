@@ -7,7 +7,7 @@ interface ISettingsBarProps {
     onFieldsChange: (fields?: ExcludableUserFields[]) => void;
 }
 
-const FieldsSettings = ({onFieldsChange}: ISettingsBarProps) => {
+const FieldsSettings = ({onFieldsChange}: ISettingsBarProps): JSX.Element => {
   const rootClassName = 'settings-bar'
   const [isOpen, setIsOpen] = useState<boolean>(false)
 

@@ -40,6 +40,7 @@
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",
     "babel-jest": "^29.5.0",
+    "css-mediaquery": "^0.1.2",
     "eslint": "^8.35.0",
     "eslint-config-react-app": "^7.0.1",
     "global-jsdom": "^8.8.0",

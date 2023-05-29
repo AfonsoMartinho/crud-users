@@ -1,5 +1,5 @@
 import React from "react";
-import { Chip, IconButton, Menu, MenuItem, Typography } from "@mui/material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { useRootStore } from "../../StoreContext";
 import { FormatsType } from "../../stores/UsersStore";
